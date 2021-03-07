@@ -57,9 +57,9 @@ if [ -z "$NEW_BRANCH" ]; then
 fi
 
 git fetch --all
-git checkout -b "remote-master" "origin/master"
 git checkout -b "${NEW_BRANCH}" "origin/${NEW_BRANCH}"
-git switch master
+git checkout -b "remote-master" "origin/master"
+# git switch master
 
 LATEST_SPRINT=$(git branch -r | grep S20 | cut -c '10-' | grep -v 'deploy' | sort | tail -1 | grep -oP '(S20.{2}-.{2})')
 
@@ -89,7 +89,7 @@ if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 		echo "deploy branch ${DEPLOY_BRANCH_KEY} not exists"
 		echo "create new branch"
 		
-		RESULT=$(create_branch "${DEPLOY_BRANCH_KEY}" "master")
+		RESULT=$(create_branch "${DEPLOY_BRANCH_KEY}" "remote-master")
 		if [ "${RESULT}" == "ERR;"* ]; then
 			echo "occurred error during create branch"
 			echo "${RESULT}"
