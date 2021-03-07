@@ -57,6 +57,7 @@ if [ -z "$NEW_BRANCH" ]; then
 fi
 
 git fetch --all
+git checkout -b "remote-master" "origin/master"
 git checkout -b "${NEW_BRANCH}" "origin/${NEW_BRANCH}"
 git switch master
 
