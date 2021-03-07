@@ -31,7 +31,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-                echo "${{ github.head_ref }}"
+                git config user.email "dev@stibee.com"
+                git config user.name "stibee-dev-bot"
                 .github/scripts/current-sprint.sh "${{ github.head_ref }}"
       
       # Runs a set of commands using the runners shell

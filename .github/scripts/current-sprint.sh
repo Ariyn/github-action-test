@@ -83,12 +83,6 @@ if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 	DEPLOY_BRANCH_KEY="deploy/${LATEST_SPRINT}"
 	EXISTS_DEPLOY_BRANCH=$(git branch -l | grep $DEPLOY_BRANCH_KEY | cut -c '3-')
 	REMOTE_EXISTS_DEPLOY_BRANCH=$(git branch -r | grep $DEPLOY_BRANCH_KEY | cut -c '10-')
-
-	echo $(git branch -l)
-
-	echo $DEPLOY_BRANCH_KEY;
-	echo $EXISTS_DEPLOY_BRANCH;
-	echo $REMOTE_EXISTS_DEPLOY_BRANCH;
 	
 	if [ -z "$EXISTS_DEPLOY_BRANCH" ] && [ -z "$REMOTE_EXISTS_DEPLOY_BRANCH" ]; then
 		echo "deploy branch ${DEPLOY_BRANCH_KEY} not exists"
