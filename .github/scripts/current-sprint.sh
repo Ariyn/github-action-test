@@ -57,7 +57,7 @@ if [ -z "$NEW_BRANCH" ]; then
 fi
 
 git fetch --all
-CHECKOUT_ERROR=$(git checkout -b "${NEW_BRANCH}" "origin/${NEW_BRANCH}"
+CHECKOUT_ERROR=$(git checkout -b "${NEW_BRANCH}" "origin/${NEW_BRANCH}")
 echo $CHECKOUT_ERROR;
 
 #CHECKOUT_ERROR=$(git checkout -b "remote-master" "origin/master")
