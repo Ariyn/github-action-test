@@ -58,7 +58,6 @@ LATEST_SPRINT=$(git branch -r | grep S20 | cut -c '10-' | grep -v 'deploy' | sor
 
 echo "LATEST_SPRINT IS ${LATEST_SPRINT}"
 
-git fetch --tag
 LATEST_SPRINT_TAG=$(git tag | grep S20 | sort | tail -1)
 
 echo "LATEST_REPEASE IS ${LATEST_SPRINT_TAG}"
