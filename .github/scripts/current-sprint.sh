@@ -95,7 +95,7 @@ if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 		RESULT=$(create_branch "${DEPLOY_BRANCH_KEY}" "master")
 		if [ "${RESULT}" == "ERR;"* ]; then
 			echo "occurred error during create branch"
-			echo "${CREATE_BRANCH_ERROR}"
+			echo "${RESULT}"
 			exit -1
 		fi
 	fi
