@@ -56,6 +56,8 @@ if [ -z "$NEW_BRANCH" ]; then
 	NEW_BRANCH="S2021-05/test";
 fi
 
+git checkout -b 'S2021-06/conflict_a' origin/S2021-06/conflict_a
+git switch master
 
 git fetch --all
 LATEST_SPRINT=$(git branch -r | grep S20 | cut -c '10-' | grep -v 'deploy' | sort | tail -1 | grep -oP '(S20.{2}-.{2})')
