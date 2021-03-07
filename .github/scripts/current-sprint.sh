@@ -101,7 +101,7 @@ if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 	
 	if [ ! -z "${MERGE_ERROR}" ] && ([ "$MERGE_ERROR" != "Already up to date." ] && [[ "${MERGE_ERROR}" != *"file changed,"*"insertion(+),"*"deletion(-)"* ]]); then
 		if [[ "${MERGE_ERROR}" == *"Automatic merge failed; fix conflicts and then commit the result."* ]]; then
-			echo "occurred CONFLICT";
+			echo "occurred CONFLICT during merge branch ${NEW_BRANCH} into deploy branch"
 			echo "aborting merge";
 			git merge --abort 2>&1 >/dev/null;
 			exit -2
