@@ -48,6 +48,10 @@ function find_suspicious_branches() {
 
 NEW_BRANCH=$1
 
+if [ "$NEW_BRANCH" == "master" ]; then
+	exit 0;
+fi
+
 if [ -z "$NEW_BRANCH" ]; then
 	NEW_BRANCH="S2021-05/test";
 fi
