@@ -59,6 +59,6 @@ jobs:
 
       - name: message to slack
         run: |
-                echo "${{ secrets.slack_url }}
+                echo "${{ secrets.slack_url }}"
                 curl ${{ secrets.slack_url }} -XPOST -d 'payload={\"text\": \"PR 머지가 실패했습니다.\"}'
         if: ${{ failure() }}
