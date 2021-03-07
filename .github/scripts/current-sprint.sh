@@ -77,8 +77,9 @@ fi
 if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 	DEPLOY_BRANCH_KEY="deploy/${LATEST_SPRINT}"
 	EXISTS_DEPLOY_BRANCH=$(git branch | grep $DEPLOY_BRANCH_KEY)
+	REMOTE_EXISTS_DEPLOY_BRANCH=$(git branch -r | grep $DEPLOY_BRANCH_KEY | cut -c '10-')
 	
-	if [ -z "$EXISTS_DEPLOY_BRANCH" ]; then
+	if [ -z "$EXISTS_DEPLOY_BRANCH" ] && [ -z "$REMOTE_EXISTS_DEPLO_BRANCH" ]; then
 		echo "deploy branch ${DEPLOY_BRANCH_KEY} not exists"
 		echo "create new branch"
 		
@@ -89,6 +90,11 @@ if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 			exit -1
 		fi
 	fi
+
+	if [ -z "$EXISTS_DEPLOY_BRANCH" ] && [ ! -z "$REMOTE_EXISTS_DEPLOY_BRANCH" ]; then
+		git checkout -b "$DEPLOY_BRANCH_KEY" "origin/${DEPLOY_BRANCH_KEY}"
+	fi
+
 	
 	git switch "${DEPLOY_BRANCH_KEY}" >/dev/null 2>&1
 	MERGE_ERROR=$(git merge $NEW_BRANCH 2>&1);
