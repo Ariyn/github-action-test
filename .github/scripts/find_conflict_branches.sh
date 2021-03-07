@@ -12,6 +12,9 @@ MERGED_BRANCHES=$(git log --merges --oneline | grep "Merge branch 'S2021-06/" | 
 #CURRENT_SPRINT_BRANCHES=$(git branch -r | grep "${CURRENT_SPRINT}/" | cut -c '10-')
 
 for i in ${MERGED_BRANCHES}; do
+	if [[ "${i}" == "${CURRENT_BRANCH}" ]]; then
+		continue
+	fi
 	MERGE_RESULT=$(git merge --no-commit ${i});
 	if [[ "${MERGE_ERROR}" == *"fatal: merge program failed"* ]]; then
 		echo ${i};
