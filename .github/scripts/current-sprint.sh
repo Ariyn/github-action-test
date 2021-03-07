@@ -60,9 +60,9 @@ git fetch --all
 CHECKOUT_ERROR=$(git checkout -b "${NEW_BRANCH}" "origin/${NEW_BRANCH}"(
 echo $CHECKOUT_ERROR;
 
-CHECKOUT_ERROR=$(git checkout -b "remote-master" "origin/master")
-echo $CHECKOUT_ERROR;
-# git switch master
+#CHECKOUT_ERROR=$(git checkout -b "remote-master" "origin/master")
+#echo $CHECKOUT_ERROR;
+git switch master
 
 LATEST_SPRINT=$(git branch -r | grep S20 | cut -c '10-' | grep -v 'deploy' | sort | tail -1 | grep -oP '(S20.{2}-.{2})')
 
@@ -92,7 +92,7 @@ if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 		echo "deploy branch ${DEPLOY_BRANCH_KEY} not exists"
 		echo "create new branch"
 		
-		RESULT=$(create_branch "${DEPLOY_BRANCH_KEY}" "remote-master")
+		RESULT=$(create_branch "${DEPLOY_BRANCH_KEY}" "master")
 		if [ "${RESULT}" == "ERR;"* ]; then
 			echo "occurred error during create branch"
 			echo "${RESULT}"
@@ -106,7 +106,7 @@ if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 	git switch "${DEPLOY_BRANCH_KEY}" >/dev/null 2>&1
 	MERGE_ERROR=$(git merge $NEW_BRANCH 2>&1);
 	
-	if [ ! -z "${MERGE_ERROR}" ] && ([ "$MERGE_ERROR" != "Already up to date." ] && [[ "${MERGE_ERROR}" != *"file changed,"*"insertion(+),"*"deletion(-)"* ]]); then
+	if [ ! -z "${MERGE_ERROR}" ] && ([ "$MERGE_ERROR" != "Already up to date." ] && [[ "${MERGE_ERROR}" != *"file changed,"*"insertion(+),"*"deletion(-)"* ]] && [[ "${MERGE_ERROR}" != *"Merge made by the 'recursive' strategy."* ]]); then
 		if [[ "${MERGE_ERROR}" == *"Automatic merge failed; fix conflicts and then commit the result."* ]]; then
 			echo "occurred CONFLICT during merge branch ${NEW_BRANCH} into deploy branch"
 			echo "aborting merge";
