@@ -36,7 +36,7 @@ jobs:
                 .github/scripts/current-sprint.sh "${{ github.head_ref }}"
       - name: find conflicted branches
         run: |
-                echo "CONFLICTED_BRANCHES="$(.github/scripts/find_conflict_branches.sh "${{ github.head_ref }}")>>$GITHUB_REF;
+                echo "CONFLICTED_BRANCHES="$(.github/scripts/find_conflict_branches.sh "${{ github.head_ref }}")>>$GITHUB_ENV;
                 for i in ${{ env.CONFLICTED_BRANCHES }}; do
                         echo $i;
                 done
