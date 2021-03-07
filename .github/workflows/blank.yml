@@ -36,8 +36,8 @@ jobs:
                 .github/scripts/current-sprint.sh "${{ github.head_ref }}"
       - name: find conflicted branches
         run: |
-                echo $(.github/scripts/find_conflict_branches.sh "${{ github.head_ref }}")>$CONFLICTED_BRANCHES;
-                for i in ${CONFLICTED_BRANCHES}; do
+                echo "CONFLICTED_BRANCHES="$(.github/scripts/find_conflict_branches.sh "${{ github.head_ref }}") >> $GITHUB_ENV;
+                for i in ${{ env.CONFLICTED_BRANCHES }}; do
                         echo $i;
                 done
         if: ${{ failure() }}
@@ -52,7 +52,7 @@ jobs:
                         await github.pulls.createReview({
                                 ...context.repo,
                                 pull_number,
-                                body: "머지 실패",
+                                body: "머지 실패 ${{ env.CONFLICTED_BRANCHES }}",
                                 event: "REQUEST_CHANGES"
                         })
 
@@ -67,5 +67,5 @@ jobs:
       - name: message to slack
         run: |
                 echo "${{ secrets.slack_url }}"
-                curl ${{ secrets.slack_url }} -XPOST -d 'payload={\"text\": \"PR 머지가 실패했습니다.\"}'
+                curl ${{ secrets.slack_url }} -XPOST -d 'payload={\"text\": \"PR 머지가 실패했습니다.\n' ${{ env.CONFLICTED_BRANCHES }} '\"}'
         if: ${{ failure() }}
