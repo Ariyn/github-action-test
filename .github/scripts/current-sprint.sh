@@ -56,6 +56,7 @@ if [ -z "$NEW_BRANCH" ]; then
 	NEW_BRANCH="S2021-05/test";
 fi
 
+echo "fetch every branch"
 git fetch --all
 CHECKOUT_ERROR=$(git checkout -b "${NEW_BRANCH}" "origin/${NEW_BRANCH}")
 echo $CHECKOUT_ERROR;
