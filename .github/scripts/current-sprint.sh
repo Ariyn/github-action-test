@@ -57,8 +57,11 @@ if [ -z "$NEW_BRANCH" ]; then
 fi
 
 git fetch --all
-git checkout -b "${NEW_BRANCH}" "origin/${NEW_BRANCH}"
-git checkout -b "remote-master" "origin/master"
+CHECKOUT_ERROR=$(git checkout -b "${NEW_BRANCH}" "origin/${NEW_BRANCH}"(
+echo $CHECKOUT_ERROR;
+
+CHECKOUT_ERROR=$(git checkout -b "remote-master" "origin/master")
+echo $CHECKOUT_ERROR;
 # git switch master
 
 LATEST_SPRINT=$(git branch -r | grep S20 | cut -c '10-' | grep -v 'deploy' | sort | tail -1 | grep -oP '(S20.{2}-.{2})')
