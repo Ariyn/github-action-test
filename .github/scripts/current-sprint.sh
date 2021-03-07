@@ -88,7 +88,7 @@ if [[ $LATEST_SPRINT_TAG -ne $LATEST_SPRINT ]]; then
 	echo $EXISTS_DEPLOY_BRANCH;
 	echo $REMOTE_EXISTS_DEPLOY_BRANCH;
 	
-	if ([[ -z "$EXISTS_DEPLOY_BRANCH" ]] && [[ -z "$REMOTE_EXISTS_DEPLO_BRANCH" ]]); then
+	if [ -z "$EXISTS_DEPLOY_BRANCH" ] && [ -z "$REMOTE_EXISTS_DEPLOY_BRANCH" ]; then
 		echo "deploy branch ${DEPLOY_BRANCH_KEY} not exists"
 		echo "create new branch"
 		
