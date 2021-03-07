@@ -5,6 +5,8 @@ name: CI
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -26,8 +28,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-                export _current_branch=$(git branch -l | grep "*" | cut -c '3-')
-                .github/scripts/current-sprint.sh $_current_branch
+                echo "${GITHUB_REF#refs/heads/}"
+                echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+                .github/scripts/current-sprint.sh "${GITHUB_REF#refs/heads/}"
       
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
