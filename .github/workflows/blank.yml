@@ -29,7 +29,7 @@ jobs:
         run: git branch -l
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: Merge into deploy branch
         run: |
                 git config user.email "dev@stibee.com"
                 git config user.name "stibee-dev-bot"
@@ -55,4 +55,8 @@ jobs:
                                 state: "closed"
                         })
 
-        if: failure()
+        if: ${{ steps.merge_into_deploy_branch.outcome == "failure" }}
+
+        - name: message to slack
+          run: curl ${{ secrets.slack-webhook.personal_url }} -XPOST -H 'content-type:application/json' -d 'payload={"text": "PR 머지가 실패했습니다."}'
+          if: ${{ steps.merge_into_deploy_branch.outcome == "failure" }}
